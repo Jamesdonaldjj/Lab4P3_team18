@@ -163,9 +163,24 @@ function fetchComments($id) {
 }
 
 function setComment($id) {
+    let score = $.trim($('#score').val());
+    let comment = $.trim($('#message-text').val());
 
-    //TODO complete implementation using the product id
-    alert("app.js/setComment() not implemented")
+    $.ajax({
+        url: Url+'SetComment',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify({"product_id":$id,"comment":comment,"score":score}), //the json is defined here using javascript's dictionary syntax.
+        contentType: 'text/plain',
+
+        success: function (data) { // on success
+            
+        },
+        error: function (data) { //on error, throw an alert
+            alert("Error while fetching data.");
+        }
+    });
+
 
     //HINT
     //Take note of how the Ajax call in app.js/fetchComments() posts a GET request to corresponding API endpoint.
@@ -174,9 +189,23 @@ function setComment($id) {
 }
 
 function addToCart($id) {
+    let email = $.trim($('#email').val());
 
-    //TODO complete implementation using the product id
-    alert("app.js/addToCart() not implemented")
+    $.ajax({
+        url: Url+"AddToCart",
+        type: 'post',
+        data: JSON.stringify({"product_id": $id,"email":email}),
+        contentType:'text/plain',
+        dataType:'json',
+        success: function (data) {
+
+        },
+        error: function (data) {
+            alert("Error while fetching data.")
+        }
+    })
+
+    
 
 
 }
