@@ -21,7 +21,7 @@ function getCart($email) {
             listAdd = '';
             itemCount = 0;
             totalPrice = 0;
-
+            qaunt = 0;
             $.each(data['data']['List'], function (i, item) {
                 listAdd = '<div class="row main align-items-center">\n' +
                     '                        <div class="col-2"><img class="img-fluid" src="' + item['image'] + '"></div>\n' +
@@ -29,11 +29,14 @@ function getCart($email) {
                     '                            <div class="row text-muted">' + item['operating_system'] + '</div>\n' +
                     '                            <div class="row">' + item['title'] + '</div>\n' +
                     '                        </div>\n' +
-                    '                        <div class="col"> <a class="border">1</a></div>\n' +
+                                                //new quantity iterface
+                    '                         <div class = "quantity">' +
+                    '                        <input type="number" step="1" min="1" name="quantity" id="qntID" value="1" title="Quantity" class="input-text Quantity quantityclass text" size="4">'+
                     '                        <div class="col">&dollar; ' + item['money_price'] + ' <a onclick="deleteItem(' + item['id'] + ')" type="button">&#10005;</a></div>\n' +
                     '                    </div>';
                 list = list + listAdd;
-                itemCount++;
+                //Update itemCount based on quantity
+                itemCount = $('#qntID').val();
                 totalPrice += parseInt(item['money_price']);
             });
 
@@ -50,16 +53,13 @@ function getCart($email) {
 }
 
 function deleteItem($id) {
-
     let id = parseInt($id);
 
     $.ajax({
         url: Url+id,
         type: 'delete',
-        contentType:'text/plain',
-        dataType:'json',
         success: function (data) {
-
+            alert("Item has been deleted")
         },
         error: function (data) {
             alert("Error while fetching data.")
